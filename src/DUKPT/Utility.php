@@ -196,25 +196,8 @@ class Utility
      */
     public static function desEncrypt($hexData, $hexKey)
     {
-        $encryptedData = mcrypt_encrypt(MCRYPT_DES, self::hex2bin($hexKey), self::hex2bin($hexData), MCRYPT_MODE_ECB);
+        $encryptedData = openssl_encrypt(self::hex2bin($hexData), 'des-ecb', self::hex2bin($hexKey), OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING);
         return strtoupper(bin2hex($encryptedData));
-    }
-
-    /**
-     * DES Decrypt in ECB mode
-     * 
-     * @param string $hexData
-     *      Ecrypted data in hexadecimal representation
-     * @param string $hexKey
-     *      Key in hexadecimal representation
-     * 
-     * @return string
-     *      Decrypted data in hexadecimal representation
-     */
-    public static function desDecrypt($hexData, $hexKey)
-    {
-        $decryptedData = mcrypt_decrypt(MCRYPT_DES, self::hex2bin($hexKey), self::hex2bin($hexData), MCRYPT_MODE_ECB);
-        return strtoupper(bin2hex($decryptedData));
     }
 
     /**
